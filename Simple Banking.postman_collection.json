@@ -1,0 +1,579 @@
+{
+	"info": {
+		"_postman_id": "499246c6-fd46-4c1f-9c92-a279bdc85af5",
+		"name": "Simple Banking",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Create account",
+			"item": [
+				{
+					"name": "Create Account with intial 2000",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});",
+									"",
+									"pm.test(\"test and set id\", function () {",
+									"    var jsonData = pm.response.json();",
+									"    pm.expect(jsonData.id).to.not.eql(null);",
+									"    pm.globals.set(\"user1\",jsonData.id)",
+									"    pm.globals.set(\"user1-iban\",jsonData.id)",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"ssn\":\"test\",\n    \"name\":\"Mustafa\",\n    \"balance\":2000\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "localhost:8080/account",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"account"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Create Account with intial 1000",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});",
+									"",
+									"pm.test(\"test and set id\", function () {",
+									"    var jsonData = pm.response.json();",
+									"    pm.expect(jsonData.id).to.not.eql(null);",
+									"    pm.globals.set(\"user2\",jsonData.id)",
+									"    pm.globals.set(\"user2-iban\",jsonData.id)",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"ssn\":\"test\",\n    \"name\":\"Mustafa\",\n    \"balance\":1000\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "localhost:8080/account",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"account"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Create Account with intial 1000 Copy",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});",
+									"",
+									"pm.test(\"test and set id\", function () {",
+									"    var jsonData = pm.response.json();",
+									"    pm.expect(jsonData.id).to.not.eql(null);",
+									"    pm.globals.set(\"user2\",jsonData.id)",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"ssn\":\"test\",\n    \"name\":\"Mustafa\",\n    \"balance\":1000\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "localhost:8080/account",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"account"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "delete account",
+			"item": [
+				{
+					"name": "delete account 3",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"id\":\"{{user3}}\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "localhost:8080/account",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"account"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "money withdraw",
+			"item": [
+				{
+					"name": "withdraw 50k from account 1 insufficient",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 400\", function () {",
+									"    pm.response.to.have.status(400);",
+									"});",
+									"",
+									"pm.test(\"test and set id\", function () {",
+									"    var jsonData = pm.response.json();",
+									"    pm.expect(jsonData.error).to.eql(\"Insufficient balance\");",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"accountId\":\"{{user1}}\",\n    \"amount\": 50000000\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "localhost:8080/transaction/withdraw",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"transaction",
+								"withdraw"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "withdraw 50 from account 1",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});",
+									"",
+									"pm.test(\"ensure from account id\", function () {",
+									"    var jsonData = pm.response.json();",
+									"    pm.expect(jsonData.from.id).to.eql(pm.globals.get(\"user1\"));",
+									"});",
+									"",
+									"pm.test(\"ensure from account balance\", function () {",
+									"    var jsonData = pm.response.json();",
+									"    pm.expect(jsonData.from.balance).to.eql(1950);",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"accountId\":\"{{user1}}\",\n    \"amount\": 50\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "localhost:8080/transaction/withdraw",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"transaction",
+								"withdraw"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "money deposit",
+			"item": [
+				{
+					"name": "deposit 10 to user2",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});",
+									"",
+									"pm.test(\"ensure from account id\", function () {",
+									"    var jsonData = pm.response.json();",
+									"    pm.expect(jsonData.from.id).to.eql(pm.globals.get(\"user2\"));",
+									"});",
+									"",
+									"pm.test(\"ensure from account balance\", function () {",
+									"    var jsonData = pm.response.json();",
+									"    pm.expect(jsonData.from.balance).to.eql(1010);",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"accountId\":\"{{user2}}\",\n    \"amount\": 10\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "localhost:8080/transaction/deposit",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"transaction",
+								"deposit"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "deposit 50 to user 1",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});",
+									"",
+									"pm.test(\"ensure from account id\", function () {",
+									"    var jsonData = pm.response.json();",
+									"    pm.expect(jsonData.from.id).to.eql(pm.globals.get(\"user1\"));",
+									"});",
+									"",
+									"pm.test(\"ensure from account balance\", function () {",
+									"    var jsonData = pm.response.json();",
+									"    pm.expect(jsonData.from.balance).to.eql(2000);",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"accountId\":\"{{user1}}\",\n    \"amount\": 50\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "localhost:8080/transaction/deposit",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"transaction",
+								"deposit"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "internal transfers",
+			"item": [
+				{
+					"name": "transafer 50 from 1 to 2",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});",
+									"",
+									"pm.test(\"ensure from account id\", function () {",
+									"    var jsonData = pm.response.json();",
+									"    pm.expect(jsonData.from.id).to.eql(pm.globals.get(\"user1\"));",
+									"});",
+									"",
+									"pm.test(\"ensure from account id\", function () {",
+									"    var jsonData = pm.response.json();",
+									"    pm.expect(jsonData.to.id).to.eql(pm.globals.get(\"user2\"));",
+									"});",
+									"",
+									"",
+									"pm.test(\"ensure from account balance\", function () {",
+									"    var jsonData = pm.response.json();",
+									"    pm.expect(jsonData.from.balance).to.eql(1950);",
+									"});",
+									"",
+									"pm.test(\"ensure to account balance\", function () {",
+									"    var jsonData = pm.response.json();",
+									"    pm.expect(jsonData.from.balance).to.eql(1060);",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"fromAccountId\":\"{{user1}}\",\n    \"toAccountId\":\"{{user2}}\",\n    \"amount\": 50\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "localhost:8080/transaction/transfer",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"transaction",
+								"transfer"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "transafer 100k from 1 to 2 Copy",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 400\", function () {",
+									"    pm.response.to.have.status(400);",
+									"});",
+									"",
+									"pm.test(\"ensure from account id\", function () {",
+									"    var jsonData = pm.response.json();",
+									"    pm.expect(jsonData.error).to.eql('Insufficient balance');",
+									"});",
+									"",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"fromAccountId\":\"{{user1}}\",\n    \"toAccountId\":\"{{user2}}\",\n    \"amount\": 10000000\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "localhost:8080/transaction/transfer",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"transaction",
+								"transfer"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "getAllAccounts",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {",
+							"    pm.response.to.have.status(200);",
+							"});",
+							"",
+							"pm.test(\"check count\", function () {",
+							"    var jsonData = pm.response.json();",
+							"    pm.expect(jsonData.length).to.eql(2);",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "localhost:8080/account",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"account"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "get account",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {",
+							"    pm.response.to.have.status(200);",
+							"});",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "localhost:8080/account/{{user3}}",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"account",
+						"{{user3}}"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}
