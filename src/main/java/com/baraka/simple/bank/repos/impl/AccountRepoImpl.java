@@ -8,6 +8,7 @@ import org.springframework.util.StringUtils;
 
 import java.time.LocalDateTime;
 import java.util.*;
+import java.util.stream.Collectors;
 
 @Repository
 public class AccountRepoImpl implements AccountRepo {
@@ -58,7 +59,7 @@ public class AccountRepoImpl implements AccountRepo {
     }
 
     public Iterable<Account> findAll() {
-        return currentAccounts.values();
+        return currentAccounts.values().stream().filter(account -> !account.isDeleted()).collect(Collectors.toList());
     }
 
     public Iterable<Account> findAllById(Iterable<Account> strings) {
